@@ -21,32 +21,69 @@ class DrivableMap {
     public DrivableMap() {
         drivable_map = new HashMap<>();
     }
+    // public DrivableMap() {
+    //        this.drivable_map = new HashMap<String, Drivable>();
+    //    }
 
-    /* TODO: Write a method named addDrivable that takes a String (the ID)
+    /* TOD: Write a method named addDrivable that takes a String (the ID)
      *       and a Drivable object. If the ID string does not appear as a key
      *       in drivable_map, then add the pair to drivable_map.
      *       Return true if the Drivable was added to drivable_map.
      */
+    public boolean addDrivable(String id, Drivable obj){
+        int size = drivable_map.size();
+
+        if(size == 0){
+            drivable_map.put(id, obj);
+            return true;
+        } else {
+            if(!drivable_map.containsKey(id)){
+                drivable_map.put(id, obj);
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 
-
-    /* TODO: Write a method named hasFasterThan that takes an int (a speed)
+    /* TOD: Write a method named hasFasterThan that takes an int (a speed)
      *       and returns true iff there is at least one item in drivable_map
      *       that has a maxSpeed >= the speed given.
      * You may want to use drivable_map.keys() or drivable_map.values() to
      * iterate through drivable_map.
      */
+    public boolean hasFasterThan(int speed){
+        if (drivable_map.containsValue(speed)){
+            return true;
+        }
+        for(Drivable d : drivable_map.values()){
+            if(d.getMaxSpeed() >= speed){
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 
 
-
-    /* TODO: Write a method named getTradable that takes no arguments and
+    /* TOD: Write a method named getTradable that takes no arguments and
      *       returns a List containing all of the Tradable items in
      *       drivable_map.
      */
+    public List<Tradable> getTradable(){
+        List<Tradable> allTradableItems= new ArrayList<Tradable>();
+        DrivableTrader tempTrader = new DrivableTrader(0);
 
+        for(Drivable dTrader : drivable_map.values()){
+            if(tempTrader.getSellingPrice(dTrader) != Tradable.MISSING_PRICE){
+                allTradableItems.add((Tradable) dTrader);
+            }
+        }
+
+        return allTradableItems;
+    }
 
 
     
